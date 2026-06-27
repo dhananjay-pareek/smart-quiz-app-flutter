@@ -1,0 +1,5 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Keep the default flutter_lints rule set as-is.
