@@ -7,6 +7,7 @@ import 'models/chapter.dart';
 import 'models/question.dart';
 import 'screens/add_questions_screen.dart';
 import 'screens/chapter_selection_screen.dart';
+import 'screens/legal_screen.dart';
 import 'screens/main_menu_screen.dart';
 import 'screens/quiz_complete_screen.dart';
 import 'screens/quiz_screen.dart';
@@ -20,6 +21,7 @@ enum AppView {
   quiz,
   quizComplete,
   addQuestions,
+  legal,
 }
 
 /// Root stateful controller for the whole app.
@@ -263,6 +265,7 @@ class _QuizAppState extends State<QuizApp> {
           completedChapters: _getCompletedChaptersCount(),
           onStartQuiz: () => _switchView(AppView.chapterSelection),
           onAddQuestions: () => _switchView(AppView.addQuestions),
+          onLegal: () => _switchView(AppView.legal),
         );
 
       case AppView.chapterSelection:
@@ -311,6 +314,11 @@ class _QuizAppState extends State<QuizApp> {
       case AppView.addQuestions:
         return AddQuestionsScreen(
           onSaveBulk: _saveBulkQuestions,
+          onBack: () => _switchView(AppView.mainMenu),
+        );
+
+      case AppView.legal:
+        return LegalScreen(
           onBack: () => _switchView(AppView.mainMenu),
         );
     }

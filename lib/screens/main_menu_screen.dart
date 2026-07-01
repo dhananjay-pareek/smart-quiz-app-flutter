@@ -11,6 +11,7 @@ class MainMenuScreen extends StatelessWidget {
   final int completedChapters;
   final VoidCallback onStartQuiz;
   final VoidCallback onAddQuestions;
+  final VoidCallback onLegal;
 
   const MainMenuScreen({
     super.key,
@@ -18,6 +19,7 @@ class MainMenuScreen extends StatelessWidget {
     required this.completedChapters,
     required this.onStartQuiz,
     required this.onAddQuestions,
+    required this.onLegal,
   });
 
   @override
@@ -106,6 +108,17 @@ class MainMenuScreen extends StatelessWidget {
             label: 'Add Custom Questions',
             style: AppButtonStyle.secondary,
             onPressed: onAddQuestions,
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: onLegal,
+            child: const Text(
+              'Privacy Policy & Terms',
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                decoration: TextDecoration.underline,
+              ),
+            ),
           ),
         ],
       ),
