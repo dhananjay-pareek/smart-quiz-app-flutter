@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_button.dart';
 import '../widgets/glass_card.dart';
@@ -7,6 +8,16 @@ class LegalScreen extends StatelessWidget {
   final VoidCallback onBack;
 
   const LegalScreen({super.key, required this.onBack});
+
+  static const String _privacyUrl = 'https://dhananjay-pareek.github.io/smart-quiz-legal/privacy.html';
+  static const String _termsUrl = 'https://dhananjay-pareek.github.io/smart-quiz-legal/terms.html';
+
+  Future<void> _launchUrl(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +43,7 @@ class LegalScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 48), // Balance for back button
+              const SizedBox(width: 48),
             ],
           ),
           const SizedBox(height: 24),
@@ -44,6 +55,7 @@ class LegalScreen extends StatelessWidget {
               context,
               'Privacy Policy',
               _privacyPolicyText,
+              _privacyUrl,
             ),
           ),
           const SizedBox(height: 16),
@@ -55,14 +67,8 @@ class LegalScreen extends StatelessWidget {
               context,
               'Terms & Conditions',
               _termsAndConditionsText,
+              _termsUrl,
             ),
-          ),
-          const SizedBox(height: 16),
-          _buildLegalItem(
-            context,
-            'About the App',
-            'Version 1.0.0',
-            null,
           ),
           const SizedBox(height: 16),
           _buildLegalItem(
@@ -73,19 +79,15 @@ class LegalScreen extends StatelessWidget {
               context,
               'Contact Support',
               'For support, please email us at support@smartquizapp.com. We will get back to you as soon as possible.',
+              null,
             ),
           ),
           const SizedBox(height: 16),
           _buildLegalItem(
             context,
-            'Rate Our App',
-            'Support us on the Play Store',
-            () {
-              // Once you have the app link, you can use url_launcher to open it.
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('App link will be available after publishing!')),
-              );
-            },
+            'About the App',
+            'Version 1.0.0',
+            null,
           ),
           const SizedBox(height: 24),
           AppButton(
@@ -146,7 +148,7 @@ class LegalScreen extends StatelessWidget {
     );
   }
 
-  void _showPolicyDialog(BuildContext context, String title, String content) {
+  void _showPolicyDialog(BuildContext context, String title, String content, String? url) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -160,6 +162,11 @@ class LegalScreen extends StatelessWidget {
           ),
         ),
         actions: [
+          if (url != null)
+            TextButton(
+              onPressed: () => _launchUrl(url),
+              child: const Text('View Online', style: TextStyle(color: AppColors.primaryBtn)),
+            ),
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('Close', style: TextStyle(color: AppColors.primaryBtn)),
