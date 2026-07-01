@@ -172,7 +172,7 @@ class LegalScreen extends StatelessWidget {
   static const String _privacyPolicyText = '''
 Privacy Policy
 
-Last Updated: 29 june 2026
+Last Updated: July 01, 2026
 
 1. Information Collection
 SmartQuiz App is designed to respect your privacy. We do not collect personally identifiable information from our users.
